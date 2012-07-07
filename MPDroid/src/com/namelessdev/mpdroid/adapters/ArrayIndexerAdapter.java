@@ -10,8 +10,12 @@ import java.util.Set;
 import org.a0z.mpd.Item;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SectionIndexer;
+import android.widget.TextView;
 
 //Stolen from http://www.anddev.org/tutalphabetic_fastscroll_listview_-_similar_to_contacts-t10123.html
 //Thanks qlimax !
@@ -20,12 +24,16 @@ public class ArrayIndexerAdapter extends ArrayAdapter<Item> implements SectionIn
 
 	HashMap<String, Integer> alphaIndexer;
 	String[] sections;
+	final int textViewResourceId;
+	LayoutInflater inflater;
 
 	@SuppressWarnings("unchecked")
 	public ArrayIndexerAdapter(Context context, int textViewResourceId, List<? extends Item> items) {
 		super(context, textViewResourceId, (List<Item>) items);
 		if (!(items instanceof ArrayList<?>))
 			throw new RuntimeException("Items must be contained in an ArrayList<Item>");
+
+		this.textViewResourceId=textViewResourceId;
 
 		// here is the tricky stuff
 		alphaIndexer = new HashMap<String, Integer>(); 
@@ -101,4 +109,25 @@ public class ArrayIndexerAdapter extends ArrayAdapter<Item> implements SectionIn
 		// the letter
 	}
 
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View row;
+
+		if (null == convertView) {
+            if (null==inflater) {
+                inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            }
+			row = inflater.inflate(textViewResourceId, null);
+		} else {
+			row = convertView;
+		}
+
+		TextView tv = (TextView) row.findViewById(android.R.id.text1);
+		tv.setText(getItem(position).mainText());
+		tv = (TextView) row.findViewById(android.R.id.text2);
+		if (null!=tv) {
+			tv.setText(getItem(position).subText());
+		}
+		return row;
+	}
 }

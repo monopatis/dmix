@@ -3,6 +3,9 @@ package com.namelessdev.mpdroid;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.a0z.mpd.Album;
+import org.a0z.mpd.Artist;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -83,6 +86,12 @@ public class MPDApplication extends Application implements ConnectionListener {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if(!settings.contains("albumTrackSort"))
 			settings.edit().putBoolean("albumTrackSort", true).commit();
+
+		// Setup MPD translations.
+		Artist.singleAlbumFormat=getResources().getString(R.string.singleAlbumFormat);
+		Artist.multipleAlbumsFormat=getResources().getString(R.string.multipleAlbumsFormat);
+		Album.singleTrackFormat=getResources().getString(R.string.singleTrackFormat);
+		Album.multipleTracksFormat=getResources().getString(R.string.multipleTracksFormat);
 	}
 
 	public void setActivity(Object activity) {

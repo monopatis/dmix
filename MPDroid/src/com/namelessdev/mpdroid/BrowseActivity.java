@@ -217,7 +217,7 @@ public abstract class BrowseActivity extends SherlockListActivity implements OnM
 	public void updateFromItems() {
 		if (items != null) {
 			//ListViewButtonAdapter<String> listAdapter = new ListViewButtonAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-			ArrayIndexerAdapter listAdapter = new ArrayIndexerAdapter(this, android.R.layout.simple_list_item_1, items);
+			ArrayIndexerAdapter listAdapter = new ArrayIndexerAdapter(this, R.layout.simple_list_item, items);
 			setListAdapter(listAdapter);
 			try {
 				getListView().setEmptyView(noResultView);

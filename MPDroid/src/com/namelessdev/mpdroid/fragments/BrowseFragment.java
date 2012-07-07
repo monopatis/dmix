@@ -206,7 +206,15 @@ public abstract class BrowseFragment extends SherlockListFragment implements OnM
 	public void updateFromItems() {
 		if (items != null) {
 			//ListViewButtonAdapter<String> listAdapter = new ListViewButtonAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
-			ArrayIndexerAdapter listAdapter = new ArrayIndexerAdapter(getActivity(), android.R.layout.simple_list_item_1, items);
+            boolean isSimple=true;
+            for (Item m : items) {
+            	if (null!=m.subText()) {
+            		isSimple=false;
+            		break;
+            	}
+            }
+
+			ArrayIndexerAdapter listAdapter = new ArrayIndexerAdapter(getActivity(), isSimple ? R.layout.simple_list_item : R.layout.detailed_list_item, items);
 			setListAdapter(listAdapter);
 			try {
 				getListView().setEmptyView(noResultView);

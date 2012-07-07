@@ -1,8 +1,8 @@
 package org.a0z.mpd;
 
 public class Album extends Item {
-	public static String singleTrackFormat="%1 Track (%2)";
-	public static String multipleTracksFormat="%1 Tracks (%2)";
+	public static String singleTrackFormat="%s Track (%s)";
+	public static String multipleTracksFormat="%s Tracks (%s)";
 
 	private final String name;
 	private final int songCount;

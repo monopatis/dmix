@@ -144,4 +144,8 @@
 	<string name="playQueue">Play Queue</string>
 	<string name="deletePlaylistPrompt">Are you sure you wish to delete %s?</string>
 	<string name="failedToDelete">Failed to delete %s</string>
+	<string name="singleAlbumFormat">%1$s Album</string>
+	<string name="multipleAlbumsFormat">%1$s Albums</string>
+	<string name="singleTrackFormat">%1$s Track (%2$s)</string>
+	<string name="multipleTracksFormat">%1$s Tracks (%2$s)</string>
 </resources>

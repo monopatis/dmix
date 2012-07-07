@@ -1,8 +1,8 @@
 package org.a0z.mpd;
 
 public class Artist extends Item {
-	public static String singleAlbumFormat="%1 Album";
-	public static String multipleAlbumsFormat="%1 Albums";
+	public static String singleAlbumFormat="%s Album";
+	public static String multipleAlbumsFormat="%s Albums";
 
 	private final String name;
 	private final String sort;

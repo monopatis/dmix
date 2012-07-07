@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.a0z.mpd.Item;
 import org.a0z.mpd.Music;
 import org.a0z.mpd.exception.MPDServerException;
 
@@ -26,6 +27,7 @@ import com.namelessdev.mpdroid.MainMenuActivity;
 import com.namelessdev.mpdroid.PlaylistEditActivity;
 import com.namelessdev.mpdroid.PlaylistSaveActivity;
 import com.namelessdev.mpdroid.R;
+import com.namelessdev.mpdroid.adapters.ArrayIndexerAdapter;
 import com.namelessdev.mpdroid.tools.Tools;
 
 public class StoredPlaylistFragment extends SherlockListFragment {
@@ -61,26 +63,21 @@ public class StoredPlaylistFragment extends SherlockListFragment {
 	
 	protected void update() {
 		try {
-			musics = app.oMPDAsyncHelper.oMPD.getPlaylistSongs(playlistName);
-			for (Music m : musics) {
-				if (m == null) {
-					continue;
+ 			musics = app.oMPDAsyncHelper.oMPD.getPlaylistSongs(playlistName);
+ 			songlist = new ArrayList<HashMap<String, Object>>();
+			boolean isSimple = true;
+			for (Item m : musics) {
+				if (null != m.subText()) {
+					isSimple = false;
+					break;
 				}
-				HashMap<String, Object> item = new HashMap<String, Object>();
-				item.put("songid", m.getSongId());
-				item.put("artist", m.getArtist());
-				item.put("title", m.getTitle());
-				item.put("play", 0);
-				songlist.add(item);
 			}
-			SimpleAdapter songs = new SimpleAdapter(getActivity(), songlist, R.layout.playlist_list_item,
-					new String[] { "play", "title", "artist" }, new int[] { R.id.picture, android.R.id.text1, android.R.id.text2 });
-
-			setListAdapter(songs);
+			ArrayIndexerAdapter listAdapter = new ArrayIndexerAdapter(getActivity(), isSimple ? R.layout.simple_list_item : R.layout.detailed_list_item, musics);
+			setListAdapter(listAdapter);
 		} catch (MPDServerException e) {
 		}
-
 	}
+	
 	@Override
 	public void onStart() {
 		super.onStart();
